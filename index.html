@@ -1746,19 +1746,21 @@
       document.getElementById('addEmployeeForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
-        const firstName = document.getElementById('firstName').value;
-        const lastName = document.getElementById('lastName').value;
+        const fullName = document.getElementById('fullNameEn').value;
         const email = document.getElementById('email').value;
         const department = document.getElementById('department').value;
-        const position = document.getElementById('position').value;
-        const salary = document.getElementById('salary').value;
+        const jobTitle = document.getElementById('jobTitle').value;
+        const basicSalary = document.getElementById('basicSalary').value;
         const joinDate = document.getElementById('joinDate').value;
         
-        // Create avatar initials
-        const initials = firstName.charAt(0) + lastName.charAt(0);
+        // Create avatar initials from full name
+        const nameParts = fullName.split(' ');
+        const initials = nameParts.length > 1 ? 
+          nameParts[0].charAt(0) + nameParts[nameParts.length - 1].charAt(0) :
+          fullName.charAt(0) + (fullName.charAt(1) || '');
         
         // Format salary
-        const formattedSalary = '$' + parseInt(salary).toLocaleString();
+        const formattedSalary = '$' + parseInt(basicSalary).toLocaleString();
         
         // Format date
         const formattedDate = new Date(joinDate).toLocaleDateString('en-US', {
@@ -1777,13 +1779,13 @@
             <div class="employee-info">
               <div class="avatar">${initials}</div>
               <div>
-                <div style="font-weight: 500">${firstName} ${lastName}</div>
+                <div style="font-weight: 500">${fullName}</div>
                 <div style="font-size: 12px; color: #718096">${email}</div>
               </div>
             </div>
           </td>
           <td>${department}</td>
-          <td>${position}</td>
+          <td>${jobTitle}</td>
           <td><span class="status-badge status-active">Active</span></td>
           <td>${formattedDate}</td>
           <td>${formattedSalary}</td>
